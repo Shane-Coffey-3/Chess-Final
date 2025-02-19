@@ -5,6 +5,7 @@ public abstract class Piece
     private final char color;
     private final char type;
     private int[] coordinate;
+    private final ImageIcon image;
 
     public abstract int[][] getMoves();
 
@@ -12,10 +13,11 @@ public abstract class Piece
         this.coordinate = coordinate;
     };
 
-    public Piece(char color, char type, int[] coordinate) {
+    public Piece(char color, int[] coordinate, char type, ImageIcon image) {
         this.color = color;
         this.type = type;
         this.coordinate = coordinate;
+        this.image = image;
     }
 
     public String toString() {
