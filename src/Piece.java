@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 
 public abstract class Piece
 {
@@ -8,6 +9,8 @@ public abstract class Piece
     private final ImageIcon image;
 
     public abstract int[][] getMoves();
+
+    public abstract void draw(Graphics g, int x, int y);
 
     public void move(int[] coordinate) {
         this.coordinate = coordinate;

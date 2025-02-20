@@ -7,10 +7,10 @@ public class BoardSpace {
     private Piece piece;
     private final Color color;
 
-    public BoardSpace(int[] coordinate, Piece piece, Color color) {
+    public BoardSpace(int[] coordinate, Color color, Piece piece) {
         this.coordinate = coordinate;
-        this.piece = piece;
         this.color = color;
+        this.piece = piece;
     }
 
     public void setPiece(Piece piece) {
