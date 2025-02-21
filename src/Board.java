@@ -1,4 +1,3 @@
-package src;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -10,15 +9,23 @@ public class Board extends JPanel {
     public static final int NO_PIECE_CODE = -1;
     public static final int WHITE_PAWN_CODE = 0;
     public static final int BLACK_PAWN_CODE = 1;
+    public static final int WHITE_KNIGHT_CODE = 2;
+    public static final int BLACK_KNIGHT_CODE = 3;
+    public static final int WHITE_BISHOP_CODE = 4;
+    public static final int BLACK_BISHOP_CODE = 5;
+    public static final int WHITE_ROOK_CODE = 6;
+    public static final int BLACK_ROOK_CODE = 7;
+    public static final int WHITE_QUEEN_CODE = 8;
+    public static final int BLACK_QUEEN_CODE = 9;
     public static final int[][] DEFAULT_BOARD = {
-            {-1, -1, -1, -1, -1, -1, -1, -1},
+            {-1, -1, -1, 9, -1, -1, -1, -1},
             {1, 1, 1, 1, 1, 1, 1, 1},
             {-1, -1, -1, -1, -1, -1, -1, -1},
             {-1, -1, -1, -1, -1, -1, -1, -1},
             {-1, -1, -1, -1, -1, -1, -1, -1},
             {-1, -1, -1, -1, -1, -1, -1, -1},
             {0, 0, 0, 0, 0, 0, 0, 0},
-            {0, -1, -1, -1, -1, -1, -1, -1}
+            {-1, -1, -1, 8, -1, -1, -1, -1}
     };
     
     public Board(int boardSize) {
@@ -51,6 +58,10 @@ public class Board extends JPanel {
                     piece = new Pawn('w', coordinate);
                 } else if (boardCode[i][j] == BLACK_PAWN_CODE) {
                     piece = new Pawn('b', coordinate);
+                } else if(boardCode[i][j] == WHITE_QUEEN_CODE) {
+                    piece = new Queen('w', coordinate);
+                } else if(boardCode[i][j] == BLACK_QUEEN_CODE) {
+                    piece = new Queen('b', coordinate);
                 }
                 
                 board[i][j] = new BoardSpace(coordinate, boardSpaceColor, piece);
