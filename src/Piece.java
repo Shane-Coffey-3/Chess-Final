@@ -1,3 +1,4 @@
+package src;
 import javax.swing.*;
 import java.awt.*;
 
@@ -10,7 +11,7 @@ public abstract class Piece
 
     public abstract int[][] getMoves();
 
-    public abstract void draw(Graphics g, int x, int y);
+    public abstract void draw(Graphics g, int x, int y, int squareSize);
 
     public void move(int[] coordinate) {
         this.coordinate = coordinate;
@@ -37,5 +38,16 @@ public abstract class Piece
 
         return result;
     }
-
+    
+    public char getColor() {
+        return color;
+    }
+    
+    public void setCoordinate(int[] coordinate) {
+        this.coordinate = coordinate;
+    }
+    
+    public int[] getCoordinate() {
+        return coordinate;
+    }
 }
