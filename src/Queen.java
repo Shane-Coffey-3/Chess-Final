@@ -6,11 +6,11 @@ public class Queen extends Piece {
     public static final ImageIcon BLACK_QUEEN_IMAGE = new ImageIcon("src/PieceImages/BlackQueen.png");
 
     public Queen(char color, int[] coordinate) {
-        super(color, coordinate, 'p', WHITE_QUEEN_IMAGE);
+        super(color, coordinate, 'p', null);
     }
 
     @Override
-    public int[][] getMoves() {return new int[][] {{-1, -1}};}
+    public int[][] getMoves(int[][] board) {return new int[][] {{-1, -1}};}
 
     @Override
     public void draw(Graphics g, int x, int y, int squareSize) {

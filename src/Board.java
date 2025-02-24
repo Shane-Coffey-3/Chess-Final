@@ -17,15 +17,17 @@ public class Board extends JPanel {
     public static final int BLACK_ROOK_CODE = 7;
     public static final int WHITE_QUEEN_CODE = 8;
     public static final int BLACK_QUEEN_CODE = 9;
+    public static final int WHITE_KING_CODE = 10;
+    public static final int BLACK_KING_CODE = 11;
     public static final int[][] DEFAULT_BOARD = {
-            {-1, -1, -1, 9, -1, -1, -1, -1},
+            {7, 3, 5, 9, 11, 5, 3, 7},
             {1, 1, 1, 1, 1, 1, 1, 1},
             {-1, -1, -1, -1, -1, -1, -1, -1},
             {-1, -1, -1, -1, -1, -1, -1, -1},
             {-1, -1, -1, -1, -1, -1, -1, -1},
             {-1, -1, -1, -1, -1, -1, -1, -1},
             {0, 0, 0, 0, 0, 0, 0, 0},
-            {-1, -1, -1, 8, -1, -1, -1, -1}
+            {6, 2, 4, 8, 10, 4, 2, 6}
     };
     
     public Board(int boardSize) {
@@ -58,10 +60,26 @@ public class Board extends JPanel {
                     piece = new Pawn('w', coordinate);
                 } else if (boardCode[i][j] == BLACK_PAWN_CODE) {
                     piece = new Pawn('b', coordinate);
+                } else if (boardCode[i][j] == WHITE_KNIGHT_CODE) {
+                    piece = new Knight('w', coordinate);
+                } else if (boardCode[i][j] == BLACK_KNIGHT_CODE) {
+                    piece = new Knight('b', coordinate);
+                } else if (boardCode[i][j] == WHITE_BISHOP_CODE) {
+                    piece = new Bishop('w', coordinate);
+                } else if (boardCode[i][j] == BLACK_BISHOP_CODE) {
+                    piece = new Bishop('b', coordinate);
+                } else if (boardCode[i][j] == WHITE_ROOK_CODE) {
+                    piece = new Rook('w', coordinate);
+                } else if (boardCode[i][j] == BLACK_ROOK_CODE) {
+                    piece = new Rook('b', coordinate);
                 } else if(boardCode[i][j] == WHITE_QUEEN_CODE) {
                     piece = new Queen('w', coordinate);
                 } else if(boardCode[i][j] == BLACK_QUEEN_CODE) {
                     piece = new Queen('b', coordinate);
+                } else if(boardCode[i][j] == WHITE_KING_CODE) {
+                    piece = new King('w', coordinate);
+                } else if(boardCode[i][j] == BLACK_KING_CODE) {
+                    piece = new King('b', coordinate);
                 }
                 
                 board[i][j] = new BoardSpace(coordinate, boardSpaceColor, piece);
