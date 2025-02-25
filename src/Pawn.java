@@ -25,7 +25,7 @@ public class Pawn extends Piece {
         
         if(y + forward >= 0 && y + forward <= 7 && board[y + forward][x].getPiece() == null) {
             moves.add(new int[] {y + forward, x});
-            if((getColor() == 'w' && y == 6) || (getColor() == 'b' && y == 1) && board[y + 2 * forward][x].getPiece() == null) {
+            if(((getColor() == 'w' && y == 6) || (getColor() == 'b' && y == 1)) && board[y + 2 * forward][x].getPiece() == null) {
                 moves.add(new int[] {y + 2 * forward, x});
             }
         }
