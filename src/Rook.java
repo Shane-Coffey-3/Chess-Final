@@ -7,7 +7,7 @@ public class Rook extends Piece {
     public static final ImageIcon BLACK_ROOK_IMAGE = new ImageIcon("src/PieceImages/BlackRook.png");
 
     public Rook(char color, int[] coordinate) {
-        super(color, coordinate, 'p', null);
+        super(color, coordinate, 'r', null);
     }
 
     @Override
