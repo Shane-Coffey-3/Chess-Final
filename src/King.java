@@ -6,7 +6,7 @@ public class King extends Piece {
     public static final ImageIcon BLACK_KING_IMAGE = new ImageIcon("src/PieceImages/BlackKing.png");
 
     public King(char color, int[] coordinate) {
-        super(color, coordinate, 'p', null);
+        super(color, coordinate, 'k', null);
     }
 
     @Override
