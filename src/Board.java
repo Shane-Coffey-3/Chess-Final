@@ -22,9 +22,9 @@ public class Board extends JPanel {
     public static final int[][] DEFAULT_BOARD = {
             {7, 3, 5, 9, 11, 5, 3, 7},
             {1, 1, 1, 1, 1, 1, 1, 1},
+            {-1, 0, -1, -1, -1, -1, -1, -1},
             {-1, -1, -1, -1, -1, -1, -1, -1},
-            {-1, -1, -1, -1, -1, -1, -1, -1},
-            {-1, -1, -1, -1, -1, -1, -1, -1},
+            {-1, -1, -1, -1, 6, -1, -1, -1},
             {-1, -1, -1, -1, -1, -1, -1, -1},
             {0, 0, 0, 0, 0, 0, 0, 0},
             {6, 2, 4, 8, 10, 4, 2, 6}
@@ -44,6 +44,34 @@ public class Board extends JPanel {
             public void keyPressed(KeyEvent e) {
                 if(e.getKeyCode() == 70) {
                     flipBoard();
+                }
+            }
+        });
+        
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                int x = e.getX() * 8 / boardSize;
+                int y = e.getY() * 8 / boardSize;
+                BoardSpace selected = board[y][x];
+                
+                if(selected.getColor() == Color.YELLOW) {
+                    Piece movingPiece = BoardSpace.getSelectedSpace().getPiece();
+                    selected.setPiece(movingPiece);
+                    movingPiece.setCoordinate(new int[] {y, x});
+                    
+                    BoardSpace.getSelectedSpace().setPiece(null);
+                    BoardSpace.getSelectedSpace().highlight();
+                    BoardSpace.clearHighlightedMoves();
+                    
+                } else if(selected.getPiece() != null) {
+                    selected.highlight();
+                    if(selected.getColor() == Color.GREEN) {
+                        int[][] moves = selected.getPiece().getMoves(board);
+                        selected.highlightMoves(moves, board);
+                    }
+                } else {
+                    BoardSpace.clearAllHighlights();
                 }
             }
         });
@@ -119,5 +147,8 @@ public class Board extends JPanel {
         revalidate();
         repaint();
     }
+    
+    public BoardSpace getSpace(int y, int x) {
+        return board[y][x];
+    }
 }
-
