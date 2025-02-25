@@ -5,6 +5,7 @@ import java.awt.event.*;
 public class Board extends JPanel {
     private final BoardSpace[][] board = new BoardSpace[8][8];
     private final int boardSize;
+    private boolean isWhiteMove;
     
     public static final int NO_PIECE_CODE = -1;
     public static final int WHITE_PAWN_CODE = 0;
@@ -22,9 +23,9 @@ public class Board extends JPanel {
     public static final int[][] DEFAULT_BOARD = {
             {7, 3, 5, 9, 11, 5, 3, 7},
             {1, 1, 1, 1, 1, 1, 1, 1},
-            {-1, 0, -1, -1, -1, -1, -1, -1},
             {-1, -1, -1, -1, -1, -1, -1, -1},
-            {-1, -1, -1, -1, 6, -1, -1, -1},
+            {-1, -1, -1, -1, -1, -1, -1, -1},
+            {-1, -1, -1, -1, -1, -1, -1, -1},
             {-1, -1, -1, -1, -1, -1, -1, -1},
             {0, 0, 0, 0, 0, 0, 0, 0},
             {6, 2, 4, 8, 10, 4, 2, 6}
@@ -36,6 +37,7 @@ public class Board extends JPanel {
         setLayout(new GridLayout(8, 8));
         setFocusable(true);
         requestFocusInWindow();
+        isWhiteMove = true;
         
         createBoard(DEFAULT_BOARD);
         
@@ -64,7 +66,9 @@ public class Board extends JPanel {
                     BoardSpace.getSelectedSpace().highlight();
                     BoardSpace.clearHighlightedMoves();
                     
-                } else if(selected.getPiece() != null) {
+                    isWhiteMove = !isWhiteMove;
+                    
+                } else if(selected.getPiece() != null && ((isWhiteMove && selected.getPiece().getColor() == 'w') || (!isWhiteMove && selected.getPiece().getColor() == 'b'))) {
                     selected.highlight();
                     if(selected.getColor() == Color.GREEN) {
                         int[][] moves = selected.getPiece().getMoves(board);
