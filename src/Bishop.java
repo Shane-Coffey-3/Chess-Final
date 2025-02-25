@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.*;
 
 public class Bishop extends Piece {
     public static final ImageIcon WHITE_BISHOP_IMAGE = new ImageIcon("src/PieceImages/WhiteBishop.png");
@@ -10,7 +11,33 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public int[][] getMoves(int[][] board) {return new int[][] {{-1, -1}};}
+    public int[][] getMoves(BoardSpace[][] board) {
+        ArrayList<int[]> moves = new ArrayList<>();
+        int x = getCoordinate()[1];
+        int y = getCoordinate()[0];
+        
+        int[][] directions = {{-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
+        
+        for(int[] dir : directions) {
+            int newY = y + dir[0];
+            int newX = x + dir[1];
+            
+            while(newY >= 0 && newY < 8 && newX >= 0 && newX < 8) {
+                if(board[newY][newX].getPiece() == null) {
+                    moves.add(new int[]{newY, newX});
+                } else {
+                    if(board[newY][newX].getPiece().getColor() != getColor()) {
+                        moves.add(new int[]{newY, newX});
+                    }
+                    break;
+                }
+                
+                newY += dir[0];
+                newX += dir[1];
+            }
+        }
+        return moves.toArray(new int[0][0]);
+    }
 
     @Override
     public void draw(Graphics g, int x, int y, int squareSize) {
