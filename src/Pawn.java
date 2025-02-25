@@ -1,3 +1,4 @@
+package src;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -11,34 +12,33 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public int[][] getMoves(int[][] board) {
+    public int[][] getMoves(BoardSpace[][] board) {
         ArrayList<int[]> moves = new ArrayList<>();
-        int x = getCoordinate()[0];
-        int y = getCoordinate()[1];
-
+        int x = getCoordinate()[1];
+        int y = getCoordinate()[0];
+        
         int forward = 0;
         if(getColor() == 'w') {
             forward = -1;
         } else {
             forward = 1;
         }
-
-        if(board[y + forward][x] == -1) {
+        
+        if(y + forward >= 0 && y + forward <= 7 && board[y + forward][x].getPiece() == null) {
             moves.add(new int[] {y + forward, x});
+            if((getColor() == 'w' && y == 6) || (getColor() == 'b' && y == 1) && board[y + 2 * forward][x].getPiece() == null) {
+                moves.add(new int[] {y + 2 * forward, x});
+            }
         }
-
-        if(board[y + forward][x - 1] == -1) {
+        
+        if(y + forward >= 0 && y + forward <= 7 && x - 1 >= 0 && x - 1 <= 7 && board[y + forward][x - 1].getPiece() != null && board[y + forward][x - 1].getPiece().getColor() != getColor()) {
             moves.add(new int[] {y + forward, x - 1});
         }
-        if(board[y + forward][x + 1] == -1) {
+        if(y + forward >= 0 && y + forward <= 7 && x + 1 >= 0 && x + 1 <= 7 && board[y + forward][x + 1].getPiece() != null && board[y + forward][x + 1].getPiece().getColor() != getColor()) {
             moves.add(new int[] {y + forward, x + 1});
         }
-
-        if(board[y + (2 * forward)][x] == -1 && y == 3.5 + (forward * 2.5)) {
-
-        }
-
-        return moves.toArray();
+        
+        return moves.toArray(new int[0][0]);
     }
 
     @Override
