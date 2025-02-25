@@ -6,7 +6,7 @@ public class Queen extends Piece {
     public static final ImageIcon BLACK_QUEEN_IMAGE = new ImageIcon("src/PieceImages/BlackQueen.png");
 
     public Queen(char color, int[] coordinate) {
-        super(color, coordinate, 'p', null);
+        super(color, coordinate, 'q', null);
     }
 
     @Override
