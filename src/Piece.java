@@ -8,7 +8,7 @@ public abstract class Piece
     private int[] coordinate;
     private final ImageIcon image;
 
-    public abstract int[][] getMoves(int[][] board);
+    public abstract int[][] getMoves(BoardSpace[][] board);
 
     public abstract void draw(Graphics g, int x, int y, int squareSize);
 
