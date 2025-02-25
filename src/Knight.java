@@ -6,7 +6,7 @@ public class Knight extends Piece {
     public static final ImageIcon BLACK_KNIGHT_IMAGE = new ImageIcon("src/PieceImages/BlackKnight.png");
 
     public Knight(char color, int[] coordinate) {
-        super(color, coordinate, 'p', null);
+        super(color, coordinate, 'n', null);
     }
 
     @Override
