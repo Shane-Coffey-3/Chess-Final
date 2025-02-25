@@ -7,7 +7,7 @@ public class Bishop extends Piece {
     public static final ImageIcon BLACK_BISHOP_IMAGE = new ImageIcon("src/PieceImages/BlackBishop.png");
 
     public Bishop(char color, int[] coordinate) {
-        super(color, coordinate, 'p', null);
+        super(color, coordinate, 'b', null);
     }
 
     @Override
