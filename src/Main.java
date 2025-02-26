@@ -11,5 +11,6 @@ public class Main {
         Board board = new Board(400);
         frame.add(board);
         frame.setVisible(true);
+        board.updateColorInCheck('w');
     }
 }

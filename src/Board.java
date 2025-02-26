@@ -4,9 +4,9 @@ import java.awt.event.*;
 
 public class Board extends JPanel {
     private final BoardSpace[][] board = new BoardSpace[8][8];
-    private final int boardSize;
     private boolean isWhiteMove;
-    
+    private char colorInCheck;
+
     public static final int NO_PIECE_CODE = -1;
     public static final int WHITE_PAWN_CODE = 0;
     public static final int BLACK_PAWN_CODE = 1;
@@ -32,12 +32,12 @@ public class Board extends JPanel {
     };
     
     public Board(int boardSize) {
-        this.boardSize = boardSize;
         setPreferredSize(new Dimension(boardSize, boardSize));
         setLayout(new GridLayout(8, 8));
         setFocusable(true);
         requestFocusInWindow();
         isWhiteMove = true;
+        colorInCheck = ' ';
         
         createBoard(DEFAULT_BOARD);
         
@@ -53,8 +53,8 @@ public class Board extends JPanel {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                int x = e.getX() * 8 / boardSize;
-                int y = e.getY() * 8 / boardSize;
+                int x = e.getX() * 8 / getWidth();
+                int y = e.getY() * 8 / getHeight();
                 BoardSpace selected = board[y][x];
                 
                 if(selected.getColor() == Color.YELLOW) {
@@ -155,4 +155,29 @@ public class Board extends JPanel {
     public BoardSpace getSpace(int y, int x) {
         return board[y][x];
     }
+
+    public void updateColorInCheck(char colorToCheck) {
+        // find king
+        int[] kingCoordinate = new int[2];
+        for(int row = 0; row < board.length; row++) {
+            for(int col = 0; col < board[row].length; col++) {
+                Piece piece = board[row][col].getPiece();
+                if(piece != null && piece.getColor() == colorToCheck && piece.getType() == 'k') {
+                    System.out.println(col + ", " + row);
+                }
+            }
+        }
+
+        // check all directions
+
+        // check knights
+
+
+        colorInCheck = ' ';
+    }
+
+    public char getColorInCheck() {
+        return colorInCheck;
+    }
+
 }

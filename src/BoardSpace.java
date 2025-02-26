@@ -104,7 +104,8 @@ public class BoardSpace extends JPanel {
         g.fillRect(0, 0, getWidth(), getHeight());
         
         if(piece != null) {
-            piece.draw(g, getWidth() / 2, getHeight() / 2, getWidth());
+
+            piece.draw(g, getWidth() / 2, getHeight() / 2, Math.min(getWidth(), getHeight()));
         }
     }
 }

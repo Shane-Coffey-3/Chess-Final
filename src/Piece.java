@@ -41,7 +41,11 @@ public abstract class Piece
     public char getColor() {
         return color;
     }
-    
+
+    public char getType() {
+        return type;
+    }
+
     public void setCoordinate(int[] coordinate) {
         this.coordinate = coordinate;
     }
