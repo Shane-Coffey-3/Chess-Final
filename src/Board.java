@@ -5,7 +5,6 @@ import java.awt.event.*;
 public class Board extends JPanel {
     private final BoardSpace[][] board = new BoardSpace[8][8];
     private boolean isWhiteMove;
-    private char colorInCheck;
 
     public static final int NO_PIECE_CODE = -1;
     public static final int WHITE_PAWN_CODE = 0;
@@ -37,8 +36,7 @@ public class Board extends JPanel {
         setFocusable(true);
         requestFocusInWindow();
         isWhiteMove = true;
-        colorInCheck = ' ';
-        
+
         createBoard(DEFAULT_BOARD);
         
         addKeyListener(new KeyAdapter() {
@@ -65,7 +63,13 @@ public class Board extends JPanel {
                     BoardSpace.getSelectedSpace().setPiece(null);
                     BoardSpace.getSelectedSpace().highlight();
                     BoardSpace.clearHighlightedMoves();
-                    
+
+                    if(isColorInCheck('w')) {
+                        System.out.println("white is in check");
+                    } else if(isColorInCheck('b')) {
+                        System.out.println("black in check");
+                    }
+
                     isWhiteMove = !isWhiteMove;
                     
                 } else if(selected.getPiece() != null && ((isWhiteMove && selected.getPiece().getColor() == 'w') || (!isWhiteMove && selected.getPiece().getColor() == 'b'))) {
@@ -156,28 +160,58 @@ public class Board extends JPanel {
         return board[y][x];
     }
 
-    public void updateColorInCheck(char colorToCheck) {
+    public boolean isColorInCheck(char colorToCheck) {
         // find king
-        int[] kingCoordinate = new int[2];
+        int kingY = -1, kingX = -1;
         for(int row = 0; row < board.length; row++) {
             for(int col = 0; col < board[row].length; col++) {
                 Piece piece = board[row][col].getPiece();
                 if(piece != null && piece.getColor() == colorToCheck && piece.getType() == 'k') {
-                    System.out.println(col + ", " + row);
+                    kingX = col;
+                    kingY = row;
                 }
             }
         }
+        if(kingY == -1) {
+            System.out.println("bro there is no king what did you do");
+        }
+        System.out.println(kingY + ", " + kingX);
 
-        // check all directions
+        // check queens
+        int[][] directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}, {-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
+
+        for(int[] dir : directions) {
+            int newY = kingY + dir[0];
+            int newX = kingX + dir[1];
+
+            while(newY >= 0 && newY < 8 && newX >= 0 && newX < 8) {
+                if(board[newY][newX].getPiece() != null && board[newY][newX].getPiece().getColor() != colorToCheck && board[newX][newY].getPiece().getType() == 'q') {
+                    return true;
+                } else if(board[newY][newX].getPiece() != null && board[newY][newX].getPiece().getColor() == colorToCheck) {
+                    break;
+                }
+
+                newY += dir[0];
+                newX += dir[1];
+            }
+        }
 
         // check knights
+        int[][] directions2 = {{-1, 2}, {-1, -2}, {1, 2}, {1, -2}, {-2, 1}, {-2, -1}, {2, 1}, {2, -1}};
 
+        for(int[] dir : directions2) {
+            int newY = kingY + dir[0];
+            int newX = kingX + dir[1];
+            if(newY < 0 || newY > 7 || newX < 0 || newX > 7) {
+                continue;
+            }
 
-        colorInCheck = ' ';
-    }
+            if(board[newY][newX].getPiece() != null && board[newY][newX].getPiece().getColor() != colorToCheck) {
+                return true;
+            }
+        }
 
-    public char getColorInCheck() {
-        return colorInCheck;
+        return false;
     }
 
 }

@@ -42,4 +42,9 @@ public class King extends Piece {
         }
         g.drawImage(image.getImage(), x - image.getIconWidth() / 2, y - image.getIconHeight() / 2, null);
     }
+
+    public boolean isInCheck() {
+        return Math.random() < 0.08;
+    }
+
 }
