@@ -43,8 +43,72 @@ public class King extends Piece {
         g.drawImage(image.getImage(), x - image.getIconWidth() / 2, y - image.getIconHeight() / 2, null);
     }
 
-    public boolean isInCheck() {
-        return Math.random() < 0.08;
+    public boolean isInCheck(BoardSpace[][] board) {
+        // find king
+        int kingY = super.getCoordinate()[1], kingX = super.getCoordinate()[0];
+
+        System.out.println(kingY + ", " + kingX);
+
+        // rook and queen
+        int x = getCoordinate()[1];
+        int y = getCoordinate()[0];
+
+        int[][] directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+
+        for(int[] dir : directions) {
+            int newY = y + dir[0];
+            int newX = x + dir[1];
+
+            while(newY >= 0 && newY < 8 && newX >= 0 && newX < 8) {
+                if(board[newY][newX].getPiece() != null) {
+                    Piece piece = board[newY][newX].getPiece();
+                    if(piece != null && piece.getColor() != super.getColor() && (piece.getType() == 'r' || piece.getType() == 'q')) {
+                        return true;
+                    }
+                    break;
+                }
+
+                newY += dir[0];
+                newX += dir[1];
+            }
+        }
+
+        directions = new int[][] {{-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
+
+        for(int[] dir : directions) {
+            int newY = y + dir[0];
+            int newX = x + dir[1];
+
+            while(newY >= 0 && newY < 8 && newX >= 0 && newX < 8) {
+                if(board[newY][newX].getPiece() != null) {
+                    Piece piece = board[newY][newX].getPiece();
+                    if(piece != null && piece.getColor() != super.getColor() && (piece.getType() == 'b' || piece.getType() == 'q')) {
+                        return true;
+                    }
+                    break;
+                }
+
+                newY += dir[0];
+                newX += dir[1];
+            }
+        }
+
+        directions = new int[][] {{-1, 2}, {-1, -2}, {1, 2}, {1, -2}, {-2, 1}, {-2, -1}, {2, 1}, {2, -1}};
+
+        for(int[] dir : directions) {
+            int newY = y + dir[0];
+            int newX = x + dir[1];
+            if(newY < 0 || newY > 7 || newX < 0 || newX > 7) {
+                continue;
+            }
+
+            Piece piece = board[newY][newX].getPiece();
+            if(piece != null && piece.getColor() != super.getColor() && piece.getType() == 'n') {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }

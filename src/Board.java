@@ -160,58 +160,17 @@ public class Board extends JPanel {
         return board[y][x];
     }
 
-    public boolean isColorInCheck(char colorToCheck) {
-        // find king
-        int kingY = -1, kingX = -1;
-        for(int row = 0; row < board.length; row++) {
-            for(int col = 0; col < board[row].length; col++) {
-                Piece piece = board[row][col].getPiece();
-                if(piece != null && piece.getColor() == colorToCheck && piece.getType() == 'k') {
-                    kingX = col;
-                    kingY = row;
+    private boolean isColorInCheck(char color) {
+        for(BoardSpace[] arr : board) {
+            for(BoardSpace space : arr) {
+                if(space.getPiece() != null && space.getPiece().getType() == 'k' && space.getPiece().getColor() == color) {
+                    return ((King) (space.getPiece())).isInCheck(board);
                 }
             }
         }
-        if(kingY == -1) {
-            System.out.println("bro there is no king what did you do");
-        }
-        System.out.println(kingY + ", " + kingX);
-
-        // check queens
-        int[][] directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}, {-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
-
-        for(int[] dir : directions) {
-            int newY = kingY + dir[0];
-            int newX = kingX + dir[1];
-
-            while(newY >= 0 && newY < 8 && newX >= 0 && newX < 8) {
-                if(board[newY][newX].getPiece() != null && board[newY][newX].getPiece().getColor() != colorToCheck && board[newX][newY].getPiece().getType() == 'q') {
-                    return true;
-                } else if(board[newY][newX].getPiece() != null && board[newY][newX].getPiece().getColor() == colorToCheck) {
-                    break;
-                }
-
-                newY += dir[0];
-                newX += dir[1];
-            }
-        }
-
-        // check knights
-        int[][] directions2 = {{-1, 2}, {-1, -2}, {1, 2}, {1, -2}, {-2, 1}, {-2, -1}, {2, 1}, {2, -1}};
-
-        for(int[] dir : directions2) {
-            int newY = kingY + dir[0];
-            int newX = kingX + dir[1];
-            if(newY < 0 || newY > 7 || newX < 0 || newX > 7) {
-                continue;
-            }
-
-            if(board[newY][newX].getPiece() != null && board[newY][newX].getPiece().getColor() != colorToCheck) {
-                return true;
-            }
-        }
-
+        System.out.println("tried to call isColorInCheck() with no king");
         return false;
     }
+
 
 }
