@@ -64,11 +64,21 @@ public class Board extends JPanel {
                     BoardSpace.getSelectedSpace().highlight();
                     BoardSpace.clearHighlightedMoves();
 
-                    if(isColorInCheck('w')) {
-                        System.out.println("white is in check");
-                    } else if(isColorInCheck('b')) {
-                        System.out.println("black in check");
+                    for(BoardSpace[] arr : board) {
+                        for(BoardSpace space : arr) {
+                            if(space.getPiece() != null && space.getPiece().getType() == 'k' && space.getPiece().getColor() == 'w') {
+                                if(isKingInCheck(space)) {
+                                    space.setColor(Color.RED);
+                                } else {
+
+                                }
+                            }
+                        }
                     }
+
+//                    if(isKingInCheck('b')) {
+//                        System.out.println("black in check");
+//                    }
 
                     isWhiteMove = !isWhiteMove;
                     
@@ -160,17 +170,7 @@ public class Board extends JPanel {
         return board[y][x];
     }
 
-    private boolean isColorInCheck(char color) {
-        for(BoardSpace[] arr : board) {
-            for(BoardSpace space : arr) {
-                if(space.getPiece() != null && space.getPiece().getType() == 'k' && space.getPiece().getColor() == color) {
-                    return ((King) (space.getPiece())).isInCheck(board);
-                }
-            }
-        }
-        System.out.println("tried to call isColorInCheck() with no king");
-        return false;
+    private boolean isKingInCheck(BoardSpace kingSpace) {
+        return ((King) (kingSpace.getPiece())).isInCheck(board);
     }
-
-
 }
