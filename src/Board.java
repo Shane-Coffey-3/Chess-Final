@@ -69,8 +69,6 @@ public class Board extends JPanel {
                             if(space.getPiece() != null && space.getPiece().getType() == 'k' && space.getPiece().getColor() == 'w') {
                                 if(isKingInCheck(space)) {
                                     space.setColor(Color.RED);
-                                } else {
-
                                 }
                             }
                         }
